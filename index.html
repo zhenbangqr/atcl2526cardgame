@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互助同行 Mix and Match</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>互助同行 Mix and Match</h1>
+
+        <div id="username-section">
+            <div class="username-input">
+                <input type="text" id="username" placeholder="输入你的名字 (Enter your name)" required>
+                <button id="submit-username">开始 (Start)</button>
+            </div>
+            
+            <div id="leaderboard-section">
+                <h2>排行榜 (Leaderboard)</h2>
+                <table id="leaderboard">
+                    <thead>
+                        <tr>
+                            <th>排名 (Rank)</th>
+                            <th>名字 (Name)</th>
+                            <th>难度 (Difficulty)</th>
+                            <th>尝试次数 (Attempts)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>

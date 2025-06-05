@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互助同行 Mix and Match - Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>互助同行 Mix and Match</h1>
+
+        <div class="controls">
+            <label for="difficulty">选择难度 (Choose Difficulty):</label>
+            <select id="difficulty">
+                <option value="easy">初级 (Easy) - 2 对 (pairs)</option>
+                <option value="medium">中级 (Medium) - 3 对 (pairs)</option>
+                <option value="hard">高级 (Hard) - 4 对 (pairs)</option>
+                <option value="expert">专家 (Expert) - 5 对 (pairs)</option>
+            </select>
+            <button id="startGame">开始游戏 (Start Game)</button>
+        </div>
+
+        <div id="game-info">
+            <p>玩家 (Player): <span id="current-player"></span></p>
+            <p>已配对 (Matches Found): <span id="matches-found">0</span></p>
+            <p>尝试次数 (Attempts): <span id="attempts">0</span></p>
+        </div>
+
+        <div id="game-board" class="game-board">
+        </div>
+
+        <div id="completion-message" style="display:none;">
+            <h2>恭喜！(Congratulations!)</h2>
+            <p>你已成功完成挑战！你可以获得一份小奖励 (You've completed the challenge! You get a small prize.)</p>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html> 
