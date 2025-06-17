@@ -1,1 +1,1 @@
-ATCL 25/26 Society Day Card Game
+PSS 25/26 Society Day Card Game
