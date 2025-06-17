@@ -196,6 +196,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function completeGame() {
+        if (timerInterval) {
+            clearInterval(timerInterval);
+        }
         gameBoard.style.display = 'none';
         completionMessage.style.display = 'block';
         
