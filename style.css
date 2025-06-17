@@ -211,6 +211,7 @@ h1 {
     color: #2c3e50;
     font-size: 1.2em;
     line-height: 1.6;
+    margin-bottom: 30px;
 }
 
 /* Responsive grid columns */
@@ -338,4 +339,23 @@ h1 {
 
 .clear-button:hover {
     background-color: #c82333;
+}
+
+.return-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.return-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }

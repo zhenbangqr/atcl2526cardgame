@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentPlayerDisplay = document.getElementById('current-player');
     const completionMessage = document.getElementById('completion-message');
     const timerDisplay = document.getElementById('timer');
+    const returnHomeButton = document.getElementById('return-home');
 
     // Get current player from localStorage
     const currentPlayer = localStorage.getItem('currentPlayer');
@@ -13,6 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
     currentPlayerDisplay.textContent = currentPlayer;
+
+    // Return home button handler
+    returnHomeButton.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
 
     // Define all available card types related to Peer Support
     const allCardTypes = [
@@ -249,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, 500);
         
-        // Save score and return to index
+        // Save score
         const score = {
             username: currentPlayer,
             time: getElapsedTime(),
@@ -261,8 +267,5 @@ document.addEventListener('DOMContentLoaded', () => {
         // Sort leaderboard by time (ascending)
         leaderboard.sort((a, b) => a.time - b.time);
         localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
-        
-        alert('恭喜完成游戏！(Congratulations on completing the game!)');
-        window.location.href = 'index.html';
     }
 }); 
