@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const gameBoard = document.getElementById('game-board');
-    const difficultySelect = document.getElementById('difficulty');
-    const startGameButton = document.getElementById('startGame');
     const matchesFoundDisplay = document.getElementById('matches-found');
     const attemptsDisplay = document.getElementById('attempts');
     const currentPlayerDisplay = document.getElementById('current-player');
     const completionMessage = document.getElementById('completion-message');
+    const timerDisplay = document.getElementById('timer');
 
     // Get current player from localStorage
     const currentPlayer = localStorage.getItem('currentPlayer');
@@ -17,45 +16,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Define all available card types related to Peer Support
     const allCardTypes = [
-        { id: 'listen', keyword: '倾听', image: '耳朵图案', order: 1 },
-        { id: 'understand', keyword: '理解', image: '心形图案', order: 2 },
-        { id: 'support', keyword: '支持', image: '握手图案', order: 3 },
-        { id: 'hope', keyword: '希望', image: '灯泡图案', order: 4 },
-        { id: 'growth', keyword: '成长', image: '树苗图案', order: 5 }
+        { id: 'listen', keyword: '倾听', image: 'images/2.png', order: 1 },
+        { id: 'understand', keyword: '理解', image: 'images/4.png', order: 2 },
+        { id: 'support', keyword: '支持', image: 'images/6.png', order: 3 },
+        { id: 'hope', keyword: '希望', image: 'images/8.png', order: 4 }
     ];
 
     let cards = [];
     let flippedCards = [];
     let matchedPairs = 0;
-    let totalPairs = 0;
+    let totalPairs = 4; // Fixed to 4 pairs (8 cards total)
     let attempts = 0;
+    let startTime = null;
+    let timerInterval = null;
 
-    startGameButton.addEventListener('click', initializeGame);
+    // Start the game immediately
+    initializeGame();
 
     function initializeGame() {
         resetGameState();
-        const difficulty = difficultySelect.value;
-        switch (difficulty) {
-            case 'easy': totalPairs = 2; break;
-            case 'medium': totalPairs = 3; break;
-            case 'hard': totalPairs = 4; break;
-            case 'expert': totalPairs = 5; break;
-            default: totalPairs = 2;
-        }
-
-        if (totalPairs <= 2) {
-            gameBoard.className = 'game-board cols-2';
-        } else if (totalPairs === 3) {
-            gameBoard.className = 'game-board cols-3';
-        } else if (totalPairs === 4) {
-            gameBoard.className = 'game-board cols-4';
-        } else {
-            gameBoard.className = 'game-board cols-5';
-        }
-
+        gameBoard.className = 'game-board cols-4 rows-2'; // 4x2 grid
         createCardsForGame();
         shuffleCards();
         renderBoard();
+        startTimer();
     }
 
     function resetGameState() {
@@ -67,6 +51,27 @@ document.addEventListener('DOMContentLoaded', () => {
         attemptsDisplay.textContent = '0';
         gameBoard.innerHTML = '';
         completionMessage.style.display = 'none';
+        if (timerInterval) {
+            clearInterval(timerInterval);
+        }
+        startTime = null;
+        timerDisplay.textContent = '00:00';
+    }
+
+    function startTimer() {
+        startTime = Date.now();
+        timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    function updateTimer() {
+        const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+        const minutes = Math.floor(elapsedTime / 60).toString().padStart(2, '0');
+        const seconds = (elapsedTime % 60).toString().padStart(2, '0');
+        timerDisplay.textContent = `${minutes}:${seconds}`;
+    }
+
+    function getElapsedTime() {
+        return Math.floor((Date.now() - startTime) / 1000);
     }
 
     function createCardsForGame() {
@@ -99,8 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const contentElement = document.createElement('div');
             contentElement.classList.add('card-content');
             contentElement.innerHTML = `
-                <div class="image-placeholder">${cardData.image}</div>
-                <div>${cardData.keyword}</div>
+                <img src="${cardData.image}" alt="${cardData.keyword}">
             `;
             cardElement.appendChild(contentElement);
 
@@ -144,9 +148,30 @@ document.addEventListener('DOMContentLoaded', () => {
             matchedPairs++;
             matchesFoundDisplay.textContent = matchedPairs;
 
-            setTimeout(() => {
-                alert("Describe to our member");
-            }, 400);
+            // Trigger confetti effect
+            const card1Rect = card1.element.getBoundingClientRect();
+            const card2Rect = card2.element.getBoundingClientRect();
+            
+            // Calculate center points of both cards
+            const x1 = card1Rect.left + card1Rect.width / 2;
+            const y1 = card1Rect.top + card1Rect.height / 2;
+            const x2 = card2Rect.left + card2Rect.width / 2;
+            const y2 = card2Rect.top + card2Rect.height / 2;
+
+            // Create confetti from both card positions
+            confetti({
+                particleCount: 50,
+                spread: 70,
+                origin: { x: x1 / window.innerWidth, y: y1 / window.innerHeight },
+                colors: ['#4CAF50', '#45a049', '#2E7D32']
+            });
+            
+            confetti({
+                particleCount: 50,
+                spread: 70,
+                origin: { x: x2 / window.innerWidth, y: y2 / window.innerHeight },
+                colors: ['#4CAF50', '#45a049', '#2E7D32']
+            });
 
             flippedCards = [];
 
@@ -168,15 +193,73 @@ document.addEventListener('DOMContentLoaded', () => {
         gameBoard.style.display = 'none';
         completionMessage.style.display = 'block';
         
+        // Multiple rainbow confetti bursts for game completion
+        const colors = ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#9400d3'];
+        
+        // Center burst
+        confetti({
+            particleCount: 150,
+            spread: 180,
+            origin: { y: 0.6 },
+            colors: colors,
+            gravity: 1.2,
+            scalar: 1.2
+        });
+
+        // Left burst
+        confetti({
+            particleCount: 100,
+            spread: 120,
+            origin: { x: 0.2, y: 0.6 },
+            colors: colors,
+            gravity: 1.2,
+            scalar: 1.2
+        });
+
+        // Right burst
+        confetti({
+            particleCount: 100,
+            spread: 120,
+            origin: { x: 0.8, y: 0.6 },
+            colors: colors,
+            gravity: 1.2,
+            scalar: 1.2
+        });
+
+        // Delayed bursts for more dramatic effect
+        setTimeout(() => {
+            confetti({
+                particleCount: 100,
+                spread: 160,
+                origin: { y: 0.4 },
+                colors: colors,
+                gravity: 1.2,
+                scalar: 1.2
+            });
+        }, 250);
+
+        setTimeout(() => {
+            confetti({
+                particleCount: 100,
+                spread: 160,
+                origin: { y: 0.8 },
+                colors: colors,
+                gravity: 1.2,
+                scalar: 1.2
+            });
+        }, 500);
+        
         // Save score and return to index
         const score = {
             username: currentPlayer,
-            difficulty: difficultySelect.value,
+            time: getElapsedTime(),
             attempts: attempts,
             date: new Date().toISOString()
         };
         let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
         leaderboard.push(score);
+        // Sort leaderboard by time (ascending)
+        leaderboard.sort((a, b) => a.time - b.time);
         localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
         
         alert('恭喜完成游戏！(Congratulations on completing the game!)');
