@@ -114,8 +114,8 @@ h1 {
     transform-style: preserve-3d;
     transition: transform 0.6s;
     cursor: pointer;
-    width: 180px;
-    height: 240px;
+    width: 150px;
+    height: 200px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -219,6 +219,7 @@ h1 {
 .game-board.cols-3 { grid-template-columns: repeat(3, 1fr); max-width: 345px; margin-left: auto; margin-right: auto;} /* For 3 pairs */
 .game-board.cols-4 { grid-template-columns: repeat(4, 1fr); max-width: 460px; margin-left: auto; margin-right: auto;} /* For 4 pairs */
 .game-board.cols-5 { grid-template-columns: repeat(5, 1fr); max-width: 575px; margin-left: auto; margin-right: auto;} /* For 5 pairs */
+.game-board.cols-8 { grid-template-columns: repeat(8, 1fr); max-width: 1000px; margin-left: 40px; margin-right: auto; } /* For 8 pairs */
 
 
 @media (max-width: 600px) {

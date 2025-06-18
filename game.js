@@ -25,13 +25,17 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'listen', keyword: '倾听', image: 'images/2.png', order: 1 },
         { id: 'understand', keyword: '理解', image: 'images/4.png', order: 2 },
         { id: 'support', keyword: '支持', image: 'images/6.png', order: 3 },
-        { id: 'hope', keyword: '希望', image: 'images/8.png', order: 4 }
+        { id: 'hope', keyword: '希望', image: 'images/8.png', order: 4 },
+        { id: 'empathy', keyword: '共情', image: 'images/10.png', order: 5 },
+        { id: 'respect', keyword: '尊重', image: 'images/12.png', order: 6 },
+        { id: 'trust', keyword: '信任', image: 'images/14.png', order: 7 },
+        { id: 'growth', keyword: '成长', image: 'images/16.png', order: 8 }
     ];
 
     let cards = [];
     let flippedCards = [];
     let matchedPairs = 0;
-    let totalPairs = 4; // Fixed to 4 pairs (8 cards total)
+    let totalPairs = 8; // Use all 8 cards (16 cards total)
     let attempts = 0;
     let startTime = null;
     let timerInterval = null;
@@ -41,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function initializeGame() {
         resetGameState();
-        gameBoard.className = 'game-board cols-4 rows-2'; // 4x2 grid
+        gameBoard.className = 'game-board cols-8 rows-2'; // 2x8 grid
         createCardsForGame();
         shuffleCards();
         renderBoard();
